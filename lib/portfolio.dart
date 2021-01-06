@@ -1,52 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:portfolio/projects.dart';
+import 'package:portfolio/widgets/header.dart';
 import 'package:social_media_buttons/social_media_buttons.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Portfolio extends StatelessWidget {
+
+
+
   @override
   Widget build(BuildContext context) {
+    openProjects(){
+      Navigator.push(context, MaterialPageRoute(builder: (ctx)=> Projects()));
+    }
     return Scaffold(
       body: Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
         child: Column(
+
           children: [
-            Container(
-              color: Colors.white,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    padding: EdgeInsets.all(18),
-                    child: Text(
-                      'Muhammad Farrukh Sajjad',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                  Container(
-                    width: MediaQuery.of(context).size.width / 3,
-                    padding: EdgeInsets.all(18),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        MouseRegion(
-                          child: Text('ABOUT ME'),
-                          cursor: MouseCursor.defer,
-                        ),
-                        Text('RESUME'),
-                        Text('PROJECTS'),
-                        Text('CONTACTS'),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            ReuseableHeader(),
             Container(
               child: Stack(
                 children: [
@@ -215,7 +191,9 @@ class Portfolio extends StatelessWidget {
                                               side: BorderSide(
                                                   color: Colors.blue),
                                             ),
-                                            onPressed: () {},
+                                            onPressed: () {
+
+                                            },
                                             color: Colors.blue,
                                             child: Center(
                                               child: Text(
@@ -237,7 +215,9 @@ class Portfolio extends StatelessWidget {
                                               side: BorderSide(
                                                   color: Colors.black),
                                             ),
-                                            onPressed: () {},
+                                            onPressed: () {
+                                              openProjects();
+                                            },
                                             color: Colors.white,
                                             child: Center(
                                               child: Text(
