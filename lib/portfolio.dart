@@ -1,26 +1,45 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:portfolio/projects.dart';
+import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:flutter_web_scrollbar/flutter_web_scrollbar.dart';
 import 'package:portfolio/widgets/header.dart';
 import 'package:social_media_buttons/social_media_buttons.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class Portfolio extends StatelessWidget {
+class Portfolio extends StatefulWidget {
+  @override
+  _PortfolioState createState() => _PortfolioState();
+}
 
+class _PortfolioState extends State<Portfolio> {
+  ScrollController _controller;
 
+  @override
+  void initState() {
+    //Initialize the  scrollController
+    _controller = ScrollController();
+    super.initState();
+  }
+
+  Color buttonColor = Colors.blue;
+  Color textColor = Colors.white;
+  Color borderColor = Colors.blue;
+
+  Color projectButtonColor = Colors.white;
+  Color projectButtonTextColor = Colors.black;
+  Color projectButtonBorderColor = Colors.black;
+
+  scrollToProjects(DragUpdateDetails dragUpdate) {
+    _controller.position.moveTo(dragUpdate.globalPosition.dy * 3.5);
+  }
 
   @override
   Widget build(BuildContext context) {
-    openProjects(){
-      Navigator.push(context, MaterialPageRoute(builder: (ctx)=> Projects()));
-    }
     return Scaffold(
-      body: Container(
-        height: MediaQuery.of(context).size.height,
-        width: MediaQuery.of(context).size.width,
+      body: SingleChildScrollView(
+        controller: _controller,
         child: Column(
-
           children: [
             ReuseableHeader(),
             Container(
@@ -183,23 +202,37 @@ class Portfolio extends StatelessWidget {
                                       padding: EdgeInsets.only(top: 20),
                                       child: Row(
                                         children: [
-                                          FlatButton(
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  new BorderRadius.circular(
-                                                      18.0),
-                                              side: BorderSide(
-                                                  color: Colors.blue),
-                                            ),
-                                            onPressed: () {
-
+                                          MouseRegion(
+                                            onHover: (value) {
+                                              setState(() {
+                                                textColor = Colors.black;
+                                                buttonColor = Colors.white;
+                                              });
                                             },
-                                            color: Colors.blue,
-                                            child: Center(
-                                              child: Text(
-                                                'RESUME',
-                                                style: TextStyle(
-                                                  color: Colors.white,
+                                            onExit: (value) {
+                                              setState(() {
+                                                textColor = Colors.white;
+                                                buttonColor = Colors.blue;
+                                              });
+                                            },
+                                            child: FlatButton(
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    new BorderRadius.circular(
+                                                        18.0),
+                                                side: BorderSide(
+                                                  color: borderColor,
+                                                ),
+                                              ),
+                                              onPressed: () {},
+                                              color: buttonColor,
+                                              child: Center(
+                                                child: Text(
+                                                  'RESUME',
+                                                  style: TextStyle(
+                                                    color: textColor,
+                                                    fontWeight: FontWeight.w600,
+                                                  ),
                                                 ),
                                               ),
                                             ),
@@ -207,23 +240,46 @@ class Portfolio extends StatelessWidget {
                                           SizedBox(
                                             width: 8,
                                           ),
-                                          FlatButton(
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  new BorderRadius.circular(
-                                                      18.0),
-                                              side: BorderSide(
-                                                  color: Colors.black),
-                                            ),
-                                            onPressed: () {
-                                              openProjects();
+                                          MouseRegion(
+                                            onHover: (value) {
+                                              setState(() {
+                                                projectButtonTextColor =
+                                                    Colors.white;
+                                                projectButtonColor =
+                                                    Colors.blue;
+                                                projectButtonBorderColor =
+                                                    Colors.blue;
+                                              });
                                             },
-                                            color: Colors.white,
-                                            child: Center(
-                                              child: Text(
-                                                'PROJECTS',
-                                                style: TextStyle(
-                                                  color: Colors.black,
+                                            onExit: (value) {
+                                              setState(() {
+                                                projectButtonTextColor =
+                                                    Colors.black;
+                                                projectButtonColor =
+                                                    Colors.white;
+                                                projectButtonBorderColor =
+                                                    Colors.black;
+                                              });
+                                            },
+                                            child: FlatButton(
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    new BorderRadius.circular(
+                                                        18.0),
+                                                side: BorderSide(
+                                                    color:
+                                                        projectButtonBorderColor),
+                                              ),
+                                              onPressed: () {},
+                                              color: projectButtonColor,
+                                              child: Center(
+                                                child: Text(
+                                                  'PROJECTS',
+                                                  style: TextStyle(
+                                                      color:
+                                                          projectButtonTextColor,
+                                                      fontWeight:
+                                                          FontWeight.w600),
                                                 ),
                                               ),
                                             ),
@@ -242,9 +298,123 @@ class Portfolio extends StatelessWidget {
                   ),
                 ],
               ),
+            ),
+            Container(
+              width: MediaQuery.of(context).size.width,
+              color: Colors.red.withOpacity(0.1),
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 15,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        height: 20,
+                        width: 20,
+                        color: Colors.blue,
+                      ),
+                      SizedBox(
+                        width: 8,
+                      ),
+                      Text(
+                        'Projects',
+                        style: TextStyle(
+                          fontSize: 25,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      )
+                    ],
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  Text('Here are few of my projects...'),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  ProjectWidget(),
+                  SizedBox(
+                    height: 15,
+                  ),
+                ],
+              ),
             )
           ],
         ),
+      ),
+    );
+  }
+}
+
+class ProjectWidget extends StatelessWidget {
+  final String name;
+  final String image;
+
+  const ProjectWidget({this.name, this.image});
+
+  @override
+  Widget build(BuildContext context) {
+    List<String> names = [
+      'Login/Register UI',
+      'Air Quality Index App',
+      'Breathing Excercise App',
+      'Hashtags for Instagram',
+    ];
+
+    List<String> projectsImages = [
+      'https://document-export.canva.com/yLen4/DAEH3MyLen4/25/thumbnail/sadhM7s-thxRDUfK1SyS_g-0001-15432700371.png',
+      'https://document-export.canva.com/Ym30g/DAETAFYm30g/13/thumbnail/fLlVrlYJFz87Hhb1GqvCCg-0001-15432694670.png',
+      'https://document-export.canva.com/PR6V4/DAEFKhPR6V4/55/thumbnail/H0m1ofaRkHjMu9jiD6TVog-0001-15432700197.png',
+      'https://document-export.canva.com/MqEVc/DAETAHMqEVc/11/thumbnail/VZd2wJAUeZ7t9wuam7E1Xw-0001-15432665017.png',
+    ];
+
+    List<String> urls = [
+      'https://github.com/FarrukhSajjad/coffeebrew-flutter',
+      'https://github.com/FarrukhSajjad/airquality-flutterapp',
+      'https://github.com/FarrukhSajjad/space-breathingexerciseapp-flutter',
+      'https://github.com/FarrukhSajjad/hastagsforinstagram',
+    ];
+    return Container(
+      height: MediaQuery.of(context).size.height / 2,
+      width: MediaQuery.of(context).size.width / 2,
+      child: Swiper(
+        autoplay: true,
+        itemWidth: MediaQuery.of(context).size.width / 2.5,
+        itemHeight: MediaQuery.of(context).size.height / 2.5,
+        itemCount: names.length,
+        viewportFraction: 0.6,
+        scale: 0.9,
+        itemBuilder: (BuildContext context, int index) {
+          return MouseRegion(
+            cursor: SystemMouseCursors.click,
+            child: GestureDetector(
+              onTap: () {
+                launch(urls[index]);
+              },
+              child: Container(
+                color: Colors.green,
+                child: GridTile(
+                  footer: GridTileBar(
+                    backgroundColor: Colors.black,
+                    title: Text(names[index]),
+                    subtitle: Text(
+                      'by Farrukh Sajjad',
+                      style: TextStyle(
+                        color: Colors.redAccent,
+                      ),
+                    ),
+                  ),
+                  child: Image.network(
+                    projectsImages[index],
+                    fit: BoxFit.fill,
+                  ),
+                ),
+              ),
+            ),
+          );
+        },
       ),
     );
   }
