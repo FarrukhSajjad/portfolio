@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:portfolio/constants.dart';
 
 class ReuseableHeader extends StatelessWidget {
   @override
@@ -11,11 +12,12 @@ class ReuseableHeader extends StatelessWidget {
         children: [
           Container(
             padding: EdgeInsets.all(18),
-            child: Text(
+            child: SelectableText(
               'Muhammad Farrukh Sajjad',
               style: TextStyle(
                 color: Colors.black,
                 fontWeight: FontWeight.bold,
+                fontSize: 24,
               ),
             ),
           ),
@@ -26,12 +28,42 @@ class ReuseableHeader extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 MouseRegion(
-                  child: Text('ABOUT ME'),
+                  child: Text(
+                    'ABOUT ME',
+                    style: TextStyle(
+                      color: Colors.blue,
+                    ),
+                  ),
                   cursor: MouseCursor.defer,
                 ),
-                Text('RESUME'),
-                Text('PROJECTS'),
-                Text('CONTACTS'),
+                TextButton(
+                  child: Text(
+                    'RESUME',
+                    style: headerOptionsTextStyle,
+                  ),
+                  onPressed: launchResume,
+                ),
+                TextButton(
+                  child: Text(
+                    'PROJECTS',
+                    style: headerOptionsTextStyle,
+                  ),
+                  onPressed: () {
+                    //    scrollController.createScrollPosition(ScrollPhysics(),ScrollContext(), scrollController.position)
+                    scrollController.position.animateTo(
+                      500,
+                      curve: Curves.decelerate,
+                      duration: Duration(seconds: 1),
+                    );
+                  },
+                ),
+                TextButton(
+                  child: Text(
+                    'CONTACT',
+                    style: headerOptionsTextStyle,
+                  ),
+                  onPressed: () {},
+                ),
               ],
             ),
           ),

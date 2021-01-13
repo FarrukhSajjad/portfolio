@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
-import 'package:flutter_web_scrollbar/flutter_web_scrollbar.dart';
+import 'package:portfolio/constants.dart';
+import 'package:portfolio/footer.dart';
 import 'package:portfolio/widgets/header.dart';
 import 'package:social_media_buttons/social_media_buttons.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -13,12 +14,11 @@ class Portfolio extends StatefulWidget {
 }
 
 class _PortfolioState extends State<Portfolio> {
-  ScrollController _controller;
-
   @override
   void initState() {
     //Initialize the  scrollController
-    _controller = ScrollController();
+    scrollController = ScrollController();
+    //print(scrollController.position.keepScrollOffset);
     super.initState();
   }
 
@@ -30,15 +30,22 @@ class _PortfolioState extends State<Portfolio> {
   Color projectButtonTextColor = Colors.black;
   Color projectButtonBorderColor = Colors.black;
 
-  scrollToProjects(DragUpdateDetails dragUpdate) {
-    _controller.position.moveTo(dragUpdate.globalPosition.dy * 3.5);
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.arrow_upward),
+        onPressed: () {
+          scrollController.position.animateTo(
+            0,
+            curve: Curves.decelerate,
+            duration: Duration(seconds: 1),
+          );
+        },
+        backgroundColor: Colors.black54,
+      ),
       body: SingleChildScrollView(
-        controller: _controller,
+        controller: scrollController,
         child: Column(
           children: [
             ReuseableHeader(),
@@ -215,23 +222,29 @@ class _PortfolioState extends State<Portfolio> {
                                                 buttonColor = Colors.blue;
                                               });
                                             },
-                                            child: FlatButton(
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    new BorderRadius.circular(
-                                                        18.0),
-                                                side: BorderSide(
-                                                  color: borderColor,
+                                            child: Tooltip(
+                                              message:
+                                                  'Resume will be downloaded...',
+                                              preferBelow: false,
+                                              child: FlatButton(
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      new BorderRadius.circular(
+                                                          18.0),
+                                                  side: BorderSide(
+                                                    color: borderColor,
+                                                  ),
                                                 ),
-                                              ),
-                                              onPressed: () {},
-                                              color: buttonColor,
-                                              child: Center(
-                                                child: Text(
-                                                  'RESUME',
-                                                  style: TextStyle(
-                                                    color: textColor,
-                                                    fontWeight: FontWeight.w600,
+                                                onPressed: launchResume,
+                                                color: buttonColor,
+                                                child: Center(
+                                                  child: Text(
+                                                    'RESUME',
+                                                    style: TextStyle(
+                                                      color: textColor,
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                    ),
                                                   ),
                                                 ),
                                               ),
@@ -340,7 +353,8 @@ class _PortfolioState extends State<Portfolio> {
                   ),
                 ],
               ),
-            )
+            ),
+            Footer(),
           ],
         ),
       ),
