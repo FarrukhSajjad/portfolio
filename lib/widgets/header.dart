@@ -36,12 +36,15 @@ class ReuseableHeader extends StatelessWidget {
                   ),
                   cursor: MouseCursor.defer,
                 ),
-                TextButton(
-                  child: Text(
-                    'RESUME',
-                    style: headerOptionsTextStyle,
+                Tooltip(
+                  message: 'Download Resume...',
+                  child: TextButton(
+                    child: Text(
+                      'RESUME',
+                      style: headerOptionsTextStyle,
+                    ),
+                    onPressed: launchResume,
                   ),
-                  onPressed: launchResume,
                 ),
                 TextButton(
                   child: Text(
@@ -51,7 +54,7 @@ class ReuseableHeader extends StatelessWidget {
                   onPressed: () {
                     //    scrollController.createScrollPosition(ScrollPhysics(),ScrollContext(), scrollController.position)
                     scrollController.position.animateTo(
-                      500,
+                      550,
                       curve: Curves.decelerate,
                       duration: Duration(seconds: 1),
                     );
@@ -62,7 +65,13 @@ class ReuseableHeader extends StatelessWidget {
                     'CONTACT',
                     style: headerOptionsTextStyle,
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    scrollController.position.animateTo(
+                      1000,
+                      curve: Curves.decelerate,
+                      duration: Duration(seconds: 1),
+                    );
+                  },
                 ),
               ],
             ),

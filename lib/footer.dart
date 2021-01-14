@@ -42,8 +42,9 @@ class _FooterState extends State<Footer> {
                       height: 15,
                     ),
                     Text(
-                      'Hello I\'m Farrukh, a noob flutter developer, Dart & Web Tech.\nI make youtube videos at IndieClan sharing my flutter knowledge and journey.\nPEACE',
+                      'Hello I\'m Farrukh, a noob flutter developer, Dart & Web Tech. I make youtube videos at IndieClan sharing my flutter knowledge and journey.\n\nPEACE',
                       style: contactTextStyle,
+                      textAlign: TextAlign.justify,
                     ),
                     ContactTile(
                       iconData: Icons.place_outlined,

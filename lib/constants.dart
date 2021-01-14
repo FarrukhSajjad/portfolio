@@ -31,3 +31,31 @@ launchResume() async {
 const headerOptionsTextStyle = TextStyle(color: Colors.black);
 
 ScrollController scrollController = ScrollController();
+
+Color buttonColor = Colors.blue;
+Color textColor = Colors.white;
+Color borderColor = Colors.blue;
+
+Color projectButtonColor = Colors.white;
+Color projectButtonTextColor = Colors.black;
+Color projectButtonBorderColor = Colors.black;
+
+Widget whoIam() {
+  return SelectableText(
+    'I\'m a paragraph. Click here to add your own text and edit me. It’s easy. Just click “Edit Text” or double click me to add your own content and make changes to the font.',
+    style: TextStyle(),
+    textAlign: TextAlign.justify,
+  );
+}
+
+Widget hello = SelectableText(
+  'Hello',
+  style: TextStyle(
+    fontSize: 70,
+    fontWeight: FontWeight.bold,
+  ),
+);
+
+Widget hereIs = SelectableText(
+  'Here\'s who I am & what I do',
+);
